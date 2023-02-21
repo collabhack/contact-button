@@ -3,9 +3,14 @@ import { FormData } from "cloudly-formdata"
 import * as http from "cloudly-http"
 import { router } from "../router"
 import { Environment } from "./Environment"
+import { Message } from "./Messages"
 
 export class Context {
-	constructor(public readonly environment: Environment) {}
+	#messages?: Message | gracely.Error
+	get message(): Message | gracely.Error {
+		return (this.#messages ??= Message.create(this.environment.storage))
+	}
+	constructor(private readonly environment: Environment) {}
 	async authenticate(request: http.Request): Promise<"admin" | undefined> {
 		return this.environment.adminSecret && request.header.authorization == `Basic ${this.environment.adminSecret}`
 			? "admin"

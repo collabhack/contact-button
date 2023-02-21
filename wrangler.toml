@@ -21,7 +21,9 @@ r2_buckets = []
 workers_dev = true
 vars = { adminSecret = "adminSecret" }
 durable_objects.bindings = []
-kv_namespaces = []
+kv_namespaces = [
+	{ binding = "storage"}
+]
 r2_buckets = []
 
 [miniflare]

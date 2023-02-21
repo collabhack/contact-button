@@ -9,8 +9,10 @@ export async function create(request: http.Request, context: Context): Promise<h
 	const message = await request.body
 	if (!model.Message.Creatable.is(message))
 		result = gracely.client.invalidContent("Message", "A valid Message.")
+	else if (gracely.Error.is(context.message))
+		result = context.message
 	else
-		result = gracely.success.created(model.Message.create(message, "localhost"))
+		result = gracely.success.created(context.message.create(message))
 	return result
 }
 router.add("POST", "/api/message", create)
