@@ -10,7 +10,7 @@ export class Context {
 	get message(): Message | gracely.Error {
 		return (this.#messages ??= Message.create(this.environment.storage))
 	}
-	constructor(private readonly environment: Environment) {}
+	constructor(readonly environment: Environment) {}
 	async authenticate(request: http.Request): Promise<"admin" | undefined> {
 		return this.environment.adminSecret && request.header.authorization == `Basic ${this.environment.adminSecret}`
 			? "admin"

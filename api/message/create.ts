@@ -11,8 +11,10 @@ export async function create(request: http.Request, context: Context): Promise<h
 		result = gracely.client.invalidContent("Message", "A valid Message.")
 	else if (gracely.Error.is(context.message))
 		result = context.message
+	else if (!request.header.referer)
+		result = gracely.client.missingHeader("referer", "referer required")
 	else
-		result = gracely.success.created(context.message.create(message))
+		result = gracely.success.created(context.message.create(message, request.header.referer))
 	return result
 }
 router.add("POST", "/api/message", create)
