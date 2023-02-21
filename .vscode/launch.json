@@ -1,0 +1,18 @@
+{
+	"configurations": [
+    {
+      "name": "Miniflare (attach)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229
+    },
+		{
+			"name": "Miniflare (launch, api only)",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "start:api"], 
+			"skipFiles": ["<node_internals>/**"]
+		}
+	],
+}

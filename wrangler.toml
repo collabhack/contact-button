@@ -1,0 +1,30 @@
+compatibility_date = "2022-11-25"
+name = "worker-template"
+workers_dev = true
+routes = []
+vars = { }
+main = "./dist/_worker.js"
+port = 8787
+
+[build]
+command = "npm install && npm run build:api"
+upload.format = "modules"
+
+[env.production]
+workers_dev = false
+vars = {  }
+durable_objects.bindings = []
+kv_namespaces = []
+r2_buckets = []
+
+[env.local]
+workers_dev = true
+vars = { adminSecret = "adminSecret" }
+durable_objects.bindings = []
+kv_namespaces = []
+r2_buckets = []
+
+[miniflare]
+durable_objects_persist = "./.miniflare/durable-objects/"
+kv_persist = "./.miniflare/kv/"
+port = 8787
